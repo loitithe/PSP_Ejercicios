@@ -29,12 +29,14 @@ public class Padre {
      * @param args
      */
     public static void main(String[] args) {
-        ProcessBuilder pb = new ProcessBuilder("java", "ProcesoEscritor");
-        pb.directory(new File("."));
-        
+        ProcessBuilder pbEscritor = new ProcessBuilder("java", "ProcesoEscritor");
+        ProcessBuilder pbLector = new ProcessBuilder("java", "ProcesoLector");
+        pbEscritor.directory(new File("."));
+        pbLector.directory(new File("."));
+
         try {
-            Process pEscritor = pb.start();
-          
+            Process pEscritor = pbEscritor.start();
+            Process pLector = pbLector.start();
 
         } catch (IOException e) {
             // TODO Auto-generated catch block

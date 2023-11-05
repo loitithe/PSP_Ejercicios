@@ -15,7 +15,6 @@ public class ProcesoLector {
                 while ((linea = br.readLine()) != null) {
                     if (linea.contains("ERROR")) {
                         System.out.println("ERROR ENCONTRADO : " + linea);
-                        logFile.wait(500);
                     
                     } else if (linea.contains("END")) {
                         System.out.println(linea + " saliendo");
