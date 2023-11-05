@@ -1,5 +1,7 @@
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Padre {
     /**
@@ -32,10 +34,15 @@ public class Padre {
         ProcessBuilder pbLector = new ProcessBuilder("java", "ProcesoLector");
         pbEscritor.directory(new File("Ejercicio8/bin"));
         pbLector.directory(new File("Ejercicio8/bin"));
+        String linea = "";
 
         try {
             Process pEscritor = pbEscritor.start();
             Process pLector = pbLector.start();
+            BufferedReader br = new BufferedReader(new InputStreamReader(pLector.getInputStream()));
+            do {
+                System.out.println(linea);
+            } while ((linea = br.readLine()) != null);
 
         } catch (IOException e) {
             // TODO Auto-generated catch block
