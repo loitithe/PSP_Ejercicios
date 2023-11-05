@@ -20,8 +20,7 @@ public class Padre {
      * caso de que la haya. Por cada línea que escriba el proceso hijo será un error
      * detectado, así que
      * nuestro proceso padre creará un contador de errores y al final escribirá el
-     * número de
-     * errores en un fichero llamado errors.txt.
+     * número de errores en un fichero llamado errors.txt.
      * Cuando el proceso hijo finalice, el padre deberá hacer lo mismo.
      * NOTA: Cuando se lance el proceso Escritor, creará el log.txt en el
      * pb.directory() que se le haya asignado.
@@ -36,7 +35,7 @@ public class Padre {
 
         try {
             Process pEscritor = pbEscritor.start();
-        //    Process pLector = pbLector.start();
+            Process pLector = pbLector.start();
 
         } catch (IOException e) {
             // TODO Auto-generated catch block

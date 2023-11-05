@@ -4,7 +4,7 @@ import java.io.FileReader;
 
 public class ProcesoLector {
     public static void main(String[] args) {
-        File logFile = new File("log.txt");
+        File logFile = new File("Ejercicio8/bin/log.txt");
         String linea;
         while (true) {
             try {
