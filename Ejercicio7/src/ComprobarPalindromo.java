@@ -7,7 +7,7 @@ public class ComprobarPalindromo {
     public static void main(String[] args) {
 
         try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
-
+                
             cadena = br.readLine();
             if (cadena.length() > 0) {
                 System.out.println(cadena + " palindromo? :" + palindromo(cadena));

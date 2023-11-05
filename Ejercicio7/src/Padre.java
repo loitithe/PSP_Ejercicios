@@ -12,6 +12,7 @@ import java.util.Scanner;
  */
 public class Padre {
     public static void main(String[] args) throws Exception {
+    
         ProcessBuilder pb = new ProcessBuilder("java", "ComprobarPalindromo");
         Scanner sc = new Scanner(System.in);
         pb.directory(new File(".\\bin"));
