@@ -31,12 +31,12 @@ public class Padre {
     public static void main(String[] args) {
         ProcessBuilder pbEscritor = new ProcessBuilder("java", "ProcesoEscritor");
         ProcessBuilder pbLector = new ProcessBuilder("java", "ProcesoLector");
-        pbEscritor.directory(new File("."));
-        pbLector.directory(new File("."));
+        pbEscritor.directory(new File("Ejercicio8/bin"));
+        pbLector.directory(new File("Ejercicio8/bin"));
 
         try {
             Process pEscritor = pbEscritor.start();
-            Process pLector = pbLector.start();
+        //    Process pLector = pbLector.start();
 
         } catch (IOException e) {
             // TODO Auto-generated catch block
