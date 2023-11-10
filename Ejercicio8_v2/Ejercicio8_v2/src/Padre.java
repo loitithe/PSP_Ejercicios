@@ -2,7 +2,6 @@
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -36,26 +35,32 @@ public class Padre {
     public static void main(String[] args) {
         ProcessBuilder pbEscritor = new ProcessBuilder("java", "ProcesoEscritor");
         ProcessBuilder pbLector = new ProcessBuilder("java", "ProcesoLector");
-        pbEscritor.directory(new File("Ejercicio8/bin"));
-        pbLector.directory(new File("Ejercicio8/bin"));
+        pbEscritor.directory(new File(
+                "C:\\Users\\a22rodrigodga\\Documents\\vs code\\psp_ejercicios\\Ejercicio8_v2\\Ejercicio8_v2\\bin\\"));
+        pbLector.directory(new File(
+                "C:\\Users\\a22rodrigodga\\Documents\\vs code\\psp_ejercicios\\Ejercicio8_v2\\Ejercicio8_v2\\bin\\"));
         String linea = "";
-
+        int numError = 0;
         try {
 
             Process pEscritor = pbEscritor.start();
             System.out.println("" + pEscritor.waitFor());
             Process pLector = pbLector.start();
             System.out.println("" + pLector.waitFor());
-            BufferedReader brError = new BufferedReader(new InputStreamReader(pEscritor.getErrorStream()));
-            while ((linea = brError.readLine()) != null) {
-                System.out.println(linea);
-            }
+            // BufferedReader brError = new BufferedReader(new
+            // InputStreamReader(pEscritor.getErrorStream()));
+            // while ((linea = brError.readLine()) != null) {
+            // System.out.println(linea);
+            // }
             try (FileWriter fw = new FileWriter(new File("errors.txt"), true);
                     BufferedReader br = new BufferedReader(new InputStreamReader(pLector.getInputStream()));) {
                 do {
                     System.out.println(linea);
-                    fw.write(linea + "\r");
+                    if (linea.contains("ERROR")) {
+                        numError++;
+                    }
                 } while ((linea = br.readLine()) != null);
+                fw.write("Se han encontrado : " + numError + " errores\r");
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }

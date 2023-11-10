@@ -11,12 +11,15 @@ public class ProcesoLector {
             try {
 
                 BufferedReader br = new BufferedReader(new FileReader(logFile));
-                while ((linea = br.readLine()).contains("END")) {
+                while ((linea = br.readLine()) != null) {
                     synchronized (logFile) {
-                        logFile.wait(1000);
+                        logFile.wait(500);
                     }
                     if (linea.contains("ERROR")) {
                         System.out.println("ERROR ENCONTRADO : " + linea);
+                    } else if (linea.contains("END")) {
+                        System.out.println(linea + " saliendo");
+                        System.exit(1);
                     }
 
                 }
