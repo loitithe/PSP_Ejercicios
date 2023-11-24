@@ -27,7 +27,7 @@ public class Hijo {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String mensaje;
         try {
-            System.out.println("ADIVINA EL COLOR .\n No es el " + color_elegido);
+            System.out.println("ADIVINA EL COLOR . No es el " + color_elegido);
             while ((mensaje = br.readLine()) != null)
                 if (mensaje.toUpperCase().equals(color_elegido)) {
                     System.out.println(
