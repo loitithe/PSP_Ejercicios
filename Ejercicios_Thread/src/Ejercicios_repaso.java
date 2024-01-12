@@ -1,3 +1,8 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.util.ArrayList;
+
 public class Ejercicios_repaso {
 
     public static void main(String[] args) throws InterruptedException {
@@ -16,7 +21,7 @@ public class Ejercicios_repaso {
 
         VisualizarRunnable visualizarRunnable = new VisualizarRunnable("pasoosoooso");
         Thread[] hilos = new Thread[5];
-        
+
         for (int i = 0; i < 5; i++) {
             Thread hilo = new Thread(visualizarRunnable);
             hilos[i] = hilo;
@@ -24,7 +29,6 @@ public class Ejercicios_repaso {
 
         for (int i = 0; i < hilos.length; i++) {
             hilos[i].start();
-            hilos[i].sleep(400);
         }
 
     }
@@ -113,7 +117,42 @@ class VisualizarRunnable implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("Hola mundo " + mensaje);
+        try {
+            Thread.sleep(Thread.currentThread().getId() * 10);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Hola mundo " + mensaje + " " + Thread.currentThread().getId());
+
     }
 
+}
+
+class Cuenta_caracteres {
+    private ArrayList<File> ficheros;
+
+    Cuenta_caracteres(ArrayList<File> ficheros) {
+        this.ficheros = ficheros;
+    }
+
+    void leerFicheros() {
+        for (File file : ficheros) {
+            leerFichero(file);
+        }
+    }
+
+    void leerFichero(File fichero) {
+        String linea;
+        int contador = 0;
+        try (BufferedReader fr = new BufferedReader(new FileReader(fichero))) {
+            while ((linea = fr.readLine()) != null) {
+                for (int i = 0; i < linea.length(); i++) {
+                    contador += linea.charAt(i);
+                }
+            }
+        } catch (Exception e) {
+        }
+        System.out.println("El archivo " + fichero.getName() + " contienen " + contador + " caracteres");
+
+    }
 }
