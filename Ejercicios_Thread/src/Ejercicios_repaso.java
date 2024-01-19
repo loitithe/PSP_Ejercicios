@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Ejercicios_repaso {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         // Hilo1 hilo1 = new Hilo1();
         // Hilo2 hilo2 = new Hilo2();
         // System.out.println("Ejecutando hilo 1");
@@ -19,18 +19,35 @@ public class Ejercicios_repaso {
         // factorial.start();
         // fibonacci.start();
 
-        VisualizarRunnable visualizarRunnable = new VisualizarRunnable("pasoosoooso");
-        Thread[] hilos = new Thread[5];
+        // VisualizarRunnable visualizarRunnable = new
+        // VisualizarRunnable("pasoosoooso");
+        // Thread[] hilos = new Thread[5];
 
-        for (int i = 0; i < 5; i++) {
-            Thread hilo = new Thread(visualizarRunnable);
-            hilos[i] = hilo;
+        // for (int i = 0; i < 5; i++) {
+        // Thread hilo = new Thread(visualizarRunnable);
+        // hilos[i] = hilo;
+        // }
+
+        // for (int i = 0; i < hilos.length; i++) {
+        // hilos[i].start();
+        // }
+
+        ArrayList<File> ficheros = new ArrayList<>();
+
+        ArrayList<Cuenta_caracteres> listaHilos = new ArrayList<>();
+        ficheros.add(new File("Ejercicios_Thread\\src\\fichero.txt"));
+        ficheros.add(new File("Ejercicios_Thread\\src\\fichero2.txt"));
+
+        for (File file : ficheros) {
+            Cuenta_caracteres cuenta_caracteres = new Cuenta_caracteres(file);
+            listaHilos.add(cuenta_caracteres);
+            cuenta_caracteres.start();
         }
 
-        for (int i = 0; i < hilos.length; i++) {
-            hilos[i].start();
+        for (Cuenta_caracteres cuenta_caracteres : listaHilos) {
+            // cuenta_caracteres.start();
         }
-
+        // cuenta_caracteres.leerFicheros();
     }
 }
 
@@ -128,11 +145,27 @@ class VisualizarRunnable implements Runnable {
 
 }
 
-class Cuenta_caracteres {
+class Cuenta_caracteres extends Thread {
     private ArrayList<File> ficheros;
+
+    public File getFichero() {
+        return fichero;
+    }
+
+    private File fichero;
+    private String nombreFichero;
 
     Cuenta_caracteres(ArrayList<File> ficheros) {
         this.ficheros = ficheros;
+    }
+
+    public Cuenta_caracteres(File fichero) {
+        this.fichero = fichero;
+        this.nombreFichero = fichero.getName();
+    }
+
+    public void setFichero(File fichero) {
+        this.fichero = fichero;
     }
 
     void leerFicheros() {
@@ -142,17 +175,45 @@ class Cuenta_caracteres {
     }
 
     void leerFichero(File fichero) {
+        System.out.println("Leyendo fichero : " + fichero.getName());
         String linea;
-        int contador = 0;
-        try (BufferedReader fr = new BufferedReader(new FileReader(fichero))) {
-            while ((linea = fr.readLine()) != null) {
+        int a = 0;
+        try (BufferedReader br = new BufferedReader(new FileReader(fichero))) {
+            while ((linea = br.readLine()) != null) {
                 for (int i = 0; i < linea.length(); i++) {
-                    contador += linea.charAt(i);
+                    System.out.print(linea.charAt(i));
+                    if (i == 0) {
+                        if (linea.charAt(i) != ' ')
+                            a++;
+                    } else {
+                        if (linea.charAt(i - 1) == ' ')
+                            if (linea.charAt(i) != ' ')
+                                a++;
+
+                    }
+                    try {
+                        Thread.sleep(0);
+                    } catch (InterruptedException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
                 }
             }
         } catch (Exception e) {
         }
-        System.out.println("El archivo " + fichero.getName() + " contienen " + contador + " caracteres");
+        System.out.println("\n \t!! !! El archivo " + fichero.getName() + " contiene " + a + " palabras");
 
+    }
+
+    @Override
+    public void run() {
+        long t_start, t_fin;
+        t_start = System.currentTimeMillis();
+
+        leerFichero(fichero);
+        System.out.println(fichero.getAbsolutePath());
+        t_fin = System.currentTimeMillis();
+        long tiempo_proceso = t_fin - t_start;
+        System.out.println("El proceso a tardado : " + tiempo_proceso + " ");
     }
 }
