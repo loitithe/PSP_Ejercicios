@@ -1,15 +1,13 @@
 public class Ejercicios_ThreadGroup {
     public static void main(String[] args) {
         Contador contador = new Contador(500);
+        ThreadGroup threadGroup = new ThreadGroup("thread_group");
         hiloInc hiloInc = new hiloInc(contador);
         hiloDec hiloDec = new hiloDec(contador);
 
         hiloInc.start();
         hiloDec.start();
-        while (contador.getNum() > -1000 || contador.getNum() < 2000) {
-            contador.getValor();
 
-        }
     }
 }
 
@@ -23,8 +21,16 @@ class hiloInc extends Thread {
     @Override
     public void run() {
         try {
-            contador.incrementa();
-            Thread.sleep(1000);
+            // while (contador.getNum() > -1000 || contador.getNum() < 2000) {
+
+            for (int i = 0; i < 30; i++) {
+
+                contador.incrementa();
+                contador.getValor();
+                Thread.sleep(100);
+            }
+
+            // }
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -42,8 +48,14 @@ class hiloDec extends Thread {
     @Override
     public void run() {
         try {
-            contador.decrementa();
-            Thread.sleep(1000);
+            // while (contador.getNum() > -1000 || contador.getNum() < 2000) {
+            for (int i = 0; i < 30; i++) {
+                contador.decrementa();
+                contador.getValor();
+                Thread.sleep(100);
+            }
+
+            // }
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -52,7 +64,7 @@ class hiloDec extends Thread {
 }
 
 class Contador {
-    private int num;
+    private int num = 0;
 
     public int getNum() {
         return num;
@@ -67,11 +79,11 @@ class Contador {
     }
 
     public synchronized void incrementa() {
-        this.num++;
+        num = num + 1;
     }
 
     public synchronized void decrementa() {
-        this.num--;
+        num = num - 1;
 
     }
 
