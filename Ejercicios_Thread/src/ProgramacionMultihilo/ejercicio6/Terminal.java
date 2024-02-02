@@ -9,8 +9,11 @@ public class Terminal extends Thread {
     public void run() {
         int numeroaleatorio = numeroaleatorio();
         System.out.println("Vendiendo " + numeroaleatorio + " entradas");
-        if (localidades.venta(numeroaleatorio, this.getName())) {
-            this.ventas += numeroaleatorio;
+        for (int i = 0; i < 2; i++) {
+            if (localidades.venta(numeroaleatorio, this.getName())) {
+                this.ventas += numeroaleatorio;
+            }
+
         }
     }
 
